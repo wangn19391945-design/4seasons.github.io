@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
@@ -18,6 +18,7 @@
             --dark: #1a1a2e;
             --light: #e8f6f3;
             --gradient: linear-gradient(135deg, #0d7377 0%, #14919b 50%, #32e0c4 100%);
+            --law: #8b4513; /* 法学棕 */
         }
         
         html {
@@ -29,7 +30,7 @@
             line-height: 1.6;
             color: #333;
             overflow-x: hidden;
-            padding-top: 60px; /* 修复：给固定导航留空间 */
+            padding-top: 60px;
         }
         
         /* 导航 */
@@ -104,7 +105,7 @@
             font-size: 18px;
         }
         
-        /* Hero 封面 - 修复：减去导航高度 */
+        /* Hero 封面 */
         .hero {
             min-height: calc(100vh - 60px);
             background: var(--gradient);
@@ -182,6 +183,20 @@
             box-shadow: 0 10px 30px rgba(0,0,0,0.2);
         }
         
+        /* 知识产权特色标签 */
+        .ip-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: linear-gradient(135deg, #8b4513 0%, #a0522d 100%);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-size: 14px;
+            margin-top: 20px;
+            font-weight: 500;
+        }
+        
         /* 政策背景 */
         .policy {
             background: var(--light);
@@ -235,7 +250,7 @@
             margin-top: 10px;
         }
         
-        /* 痛点 - 修复：全新布局避免重叠 */
+        /* 痛点 - 修复：正三角布局 */
         .pain-points {
             background: var(--dark);
             color: white;
@@ -254,7 +269,7 @@
             min-height: 500px;
         }
         
-        /* 三角形背景 */
+        /* 三角形背景 - 正三角 */
         .triangle-bg {
             width: 0;
             height: 0;
@@ -268,11 +283,11 @@
             z-index: 1;
         }
         
-        /* 三个圆形角标 - 修复：绝对定位确保不重叠 */
+        /* 三个圆形角标 - 修复：正三角布局 */
         .triangle-corners {
             position: relative;
             width: 500px;
-            height: 400px;
+            height: 450px;
             z-index: 2;
         }
         
@@ -292,21 +307,22 @@
             backdrop-filter: blur(5px);
         }
         
-        /* 左上 */
+        /* 修复：正三角布局 - 底部两个，顶部一个 */
         .corner-1 { 
+            /* 顶部 */
             top: 0;
-            left: 0;
-        }
-        /* 右上 */
-        .corner-2 { 
-            top: 0;
-            right: 0;
-        }
-        /* 底部居中 */
-        .corner-3 { 
-            bottom: 0;
             left: 50%;
             transform: translateX(-50%);
+        }
+        .corner-2 { 
+            /* 左下 */
+            bottom: 0;
+            left: 0;
+        }
+        .corner-3 { 
+            /* 右下 */
+            bottom: 0;
+            right: 0;
         }
         
         .triangle-corner h4 {
@@ -348,6 +364,61 @@
         .solution-box h3 {
             font-size: 24px;
             margin-bottom: 15px;
+        }
+        
+        /* 知识产权专区 */
+        .ip-section {
+            background: linear-gradient(135deg, #f5f5dc 0%, #e8f6f3 100%);
+            border-top: 4px solid var(--law);
+        }
+        
+        .ip-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 40px;
+            margin-top: 40px;
+        }
+        
+        .ip-card {
+            background: white;
+            border-radius: 20px;
+            padding: 35px;
+            box-shadow: 0 10px 30px rgba(139, 69, 19, 0.1);
+            border-left: 4px solid var(--law);
+        }
+        
+        .ip-card h3 {
+            color: var(--law);
+            font-size: 22px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .ip-card p {
+            color: #555;
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+        
+        .ip-highlight {
+            background: #f5f5dc;
+            padding: 15px;
+            border-radius: 10px;
+            border-left: 3px solid var(--law);
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .law-badge {
+            display: inline-block;
+            background: var(--law);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 12px;
+            margin-top: 10px;
         }
         
         /* 技术壁垒 */
@@ -725,6 +796,19 @@
             font-size: 16px;
         }
         
+        .ip-signature {
+            margin-top: 40px;
+            padding: 20px;
+            background: rgba(139, 69, 19, 0.2);
+            border-radius: 15px;
+            border: 2px solid rgba(255,255,255,0.3);
+        }
+        
+        .ip-signature p {
+            font-size: 16px;
+            margin: 5px 0;
+        }
+        
         /* 页脚 */
         footer {
             background: var(--dark);
@@ -743,11 +827,12 @@
             .nav-links { display: none; }
             .tech-grid,
             .matrix-grid,
-            .coop-grid { grid-template-columns: 1fr; }
+            .coop-grid,
+            .ip-grid { grid-template-columns: 1fr; }
             .biz-model { grid-template-columns: 1fr; }
             .stats-grid { grid-template-columns: 1fr; }
             
-            /* 修复移动端三角形布局 */
+            /* 移动端三角形改为垂直排列 */
             .triangle-corners {
                 width: 100%;
                 height: auto;
@@ -785,12 +870,13 @@
     </style>
 </head>
 <body>
-    <!-- 导航 - 修复：删除团队链接 -->
+    <!-- 导航 -->
     <nav>
         <div class="nav-container">
             <div class="logo">🟢 齐工微课</div>
             <ul class="nav-links">
                 <li><a href="#policy">时代机遇</a></li>
+                <li><a href="#ip">知识产权</a></li>
                 <li><a href="#pain">痛点破解</a></li>
                 <li><a href="#tech">技术壁垒</a></li>
                 <li><a href="#business">商业模式</a></li>
@@ -807,6 +893,11 @@
             <p class="hero-subtitle">AI孪生实训驱动的县域职业技能微学习中心</p>
             <p class="hero-desc">响应教育部"双千计划"，以微证书连接教育供给与产业需求，构建"能力本位"的县域人才培养新基建</p>
             <a href="#policy" class="cta-btn">了解项目详情</a>
+            
+            <!-- 知识产权特色标签 -->
+            <div class="ip-badge">
+                ⚖️ 法学视角下的职业技能培训创新与知识产权保护
+            </div>
         </div>
     </section>
 
@@ -814,7 +905,7 @@
     <section id="policy" class="policy">
         <div class="container">
             <h2>时代机遇</h2>
-            <p class="section-subtitle">教育部2025年"双千计划"为项目提供制度支持</p>
+            <p class="section-subtitle">教育部2025年"双千计划"为项目提供制度合法性</p>
             
             <div class="policy-card fade-in">
                 <p class="policy-quote">
@@ -840,7 +931,53 @@
         </div>
     </section>
 
-    <!-- 痛点破解 - 修复：全新三角形布局 -->
+    <!-- 知识产权专区 - 新增 -->
+    <section id="ip" class="ip-section">
+        <div class="container">
+            <h2 style="color: var(--law);">⚖️ 知识产权创新机制</h2>
+            <p class="section-subtitle">依托法学专业优势，构建"培训内容版权归属+学员学习成果确权"双机制</p>
+            
+            <div class="ip-grid fade-in">
+                <div class="ip-card">
+                    <h3>📚 县域特色技能知识产权数据库</h3>
+                    <p>构建全国首个县域职业技能知识产权数据库，对地方特色技艺、传统手工艺、农产品加工技术等进行系统化的知识产权梳理与保护。</p>
+                    <div class="ip-highlight">
+                        <strong>核心功能：</strong>技艺溯源、专利申请辅助、侵权监测、维权支持，为县域产业创新提供法律保障
+                    </div>
+                    <span class="law-badge">专利法 + 著作权法</span>
+                </div>
+                
+                <div class="ip-card">
+                    <h3>🔐 微证书版权登记与区块链存证</h3>
+                    <p>运用区块链技术实现微证书的全生命周期存证，结合著作权法确立培训内容的知识产权归属，确保课程内容不被侵权盗用。</p>
+                    <div class="ip-highlight">
+                        <strong>技术实现：</strong>培训内容哈希上链、证书发行时间戳、学习过程可信存证、企业查询验证接口
+                    </div>
+                    <span class="law-badge">著作权法 + 电子签名法</span>
+                </div>
+                
+                <div class="ip-card">
+                    <h3>📝 培训内容版权归属机制</h3>
+                    <p>建立清晰的培训内容知识产权归属体系：平台拥有课程框架版权，讲师拥有原创内容版权，学员拥有学习成果版权。</p>
+                    <div class="ip-highlight">
+                        <strong>三方共赢：</strong>激励优质内容创作、保护讲师合法权益、确保学员成果归属明确
+                    </div>
+                    <span class="law-badge">著作权法 + 合同法</span>
+                </div>
+                
+                <div class="ip-card">
+                    <h3>🎓 学员学习成果确权体系</h3>
+                    <p>为学员建立完整的技能学习档案与成果确权体系，包括实训作品、项目成果、技能认证等，形成可验证的能力证明。</p>
+                    <div class="ip-highlight">
+                        <strong>确权内容：</strong>实训作品著作权登记、项目成果专利辅助申请、技能积分法律属性界定
+                    </div>
+                    <span class="law-badge">著作权法 + 民法典</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 痛点破解 - 修复：正三角布局 -->
     <section id="pain" class="pain-points">
         <div class="container">
             <h2>破解"不可能三角"</h2>
@@ -850,7 +987,7 @@
                 <!-- 三角形背景 -->
                 <div class="triangle-bg"></div>
                 
-                <!-- 三个圆形角标 - 修复：使用独立容器避免重叠 -->
+                <!-- 三个圆形角标 - 修复：正三角布局（顶部一个，底部两个） -->
                 <div class="triangle-corners">
                     <div class="triangle-corner corner-1">
                         <h4>❌ 政府项目</h4>
@@ -923,14 +1060,14 @@
                     <div class="arch-layer-number">2</div>
                     <div class="arch-layer-content">
                         <h4>平台层：信任与流通</h4>
-                        <p>区块链技能存证 + 技能积分银行（Token通证化，跨县域流通）</p>
+                        <p>区块链技能存证 + 技能积分银行（Token通证化，跨县域流通）+ <strong style="color: var(--law);">知识产权确权</strong></p>
                     </div>
                 </div>
                 <div class="arch-layer">
                     <div class="arch-layer-number">1</div>
                     <div class="arch-layer-content">
                         <h4>资源层：数字孪生实训</h4>
-                        <p>AI虚拟直播间、数字孪生供应链、AR田间实训场景</p>
+                        <p>AI虚拟直播间、数字孪生供应链、AR田间实训场景、<strong style="color: var(--law);">县域技能IP数据库</strong></p>
                     </div>
                 </div>
             </div>
@@ -957,7 +1094,7 @@
                         <div class="flow-icon">📜</div>
                         <div class="flow-text">
                             <h4>获得微证书</h4>
-                            <p>技能积分上链存证</p>
+                            <p>技能积分上链存证 + <strong style="color: var(--law);">学习成果确权</strong></p>
                         </div>
                     </div>
                     <div class="flow-arrow">⬇</div>
@@ -988,8 +1125,8 @@
                         <p>AI孪生实训替代真实场地设备，本地"学习经纪人"替代外派员工，人效提升3倍</p>
                     </div>
                     <div class="biz-feature">
-                        <h4>📈 多元收入</h4>
-                        <p>企业定制培训费 + 技能积分交易手续费 + 政府购买服务补贴</p>
+                        <h4>⚖️ 知识产权增值</h4>
+                        <p>培训内容版权保护 + 学员成果确权 + 技能IP数据库，构建法律护城河</p>
                     </div>
                 </div>
             </div>
@@ -1013,6 +1150,7 @@
                             <li>"一村一品"品牌运营 <span class="partner-tag">农业合作社</span></li>
                             <li>冷链物流管理 <span class="partner-tag">京东农场</span></li>
                             <li>农产品直播话术 <span class="partner-tag">拼多多</span></li>
+                            <li style="color: var(--law); font-weight: 500;">⚖️ 地理标志产品知识产权保护 <span class="partner-tag" style="background: #f5f5dc; color: var(--law);">知识产权</span></li>
                         </ul>
                     </div>
                 </div>
@@ -1027,6 +1165,7 @@
                             <li>民宿数字化运营 <span class="partner-tag">民宿协会</span></li>
                             <li>非遗手作体验设计 <span class="partner-tag">文旅局</span></li>
                             <li>乡村研学课程开发 <span class="partner-tag">教育局</span></li>
+                            <li style="color: var(--law); font-weight: 500;">⚖️ 非遗技艺版权登记与保护 <span class="partner-tag" style="background: #f5f5dc; color: var(--law);">知识产权</span></li>
                         </ul>
                     </div>
                 </div>
@@ -1041,6 +1180,7 @@
                             <li>无人机植保操作 <span class="partner-tag">农机企业</span></li>
                             <li>智能大棚管理 <span class="partner-tag">农业局</span></li>
                             <li>农业数据分析 <span class="partner-tag">科技公司</span></li>
+                            <li style="color: var(--law); font-weight: 500;">⚖️ 农业技术专利布局指导 <span class="partner-tag" style="background: #f5f5dc; color: var(--law);">知识产权</span></li>
                         </ul>
                     </div>
                 </div>
@@ -1055,6 +1195,7 @@
                             <li>智能设备基础维护 <span class="partner-tag">工业园区</span></li>
                             <li>质量管理与检测 <span class="partner-tag">制造企业</span></li>
                             <li>安全生产规范 <span class="partner-tag">安监部门</span></li>
+                            <li style="color: var(--law); font-weight: 500;">⚖️ 实用新型专利申请实务 <span class="partner-tag" style="background: #f5f5dc; color: var(--law);">知识产权</span></li>
                         </ul>
                     </div>
                 </div>
@@ -1080,9 +1221,9 @@
                     <p>优秀学员成为"技能带头人"，获得培训收益分成，实现自组织增长</p>
                 </div>
                 <div class="coop-card">
-                    <div class="coop-icon">🎯</div>
-                    <h3>在地化运营</h3>
-                    <p>本地返乡青年担任"学习经纪人"，非外派员工，降低运营成本，增强信任感</p>
+                    <div class="coop-icon">⚖️</div>
+                    <h3>知识产权服务</h3>
+                    <p>为社员提供免费的知识产权咨询、专利申请辅助、版权登记等法律服务</p>
                 </div>
             </div>
         </div>
@@ -1120,6 +1261,13 @@
                         <td class="check">✅ 企业认证+微证书双证</td>
                     </tr>
                     <tr>
+                        <td>知识产权保障</td>
+                        <td class="cross">❌ 无保护</td>
+                        <td class="cross">❌ 无体系</td>
+                        <td class="cross">❌ 无法务</td>
+                        <td class="check">✅ 法学专业+全程确权</td>
+                    </tr>
+                    <tr>
                         <td>运营可持续性</td>
                         <td class="cross">❌ 获客成本高</td>
                         <td class="cross">❌ 依赖财政</td>
@@ -1138,7 +1286,7 @@
         </div>
     </section>
 
-    <!-- 结尾页 - 修复：直接接在对比优势后面 -->
+    <!-- 结尾页 -->
     <section class="ending">
         <div class="container">
             <div class="ending-content">
@@ -1148,6 +1296,12 @@
                     <p>安阳工学院 · 知识产权 · 王德宁</p>
                     <p style="margin-top: 30px;"><span class="label">联系方式</span></p>
                     <p>18937390793</p>
+                    
+                    <div class="ip-signature">
+                        <p><strong>⚖️ 法学赋能职业教育创新</strong></p>
+                        <p>以知识产权为支点，构建县域技能人才培养新生态</p>
+                    </div>
+                    
                     <p style="margin-top: 40px; font-size: 16px; opacity: 0.8;">中国国际大学生创新大赛参赛作品</p>
                 </div>
             </div>
@@ -1193,4 +1347,3 @@
     </script>
 </body>
 </html>
-
