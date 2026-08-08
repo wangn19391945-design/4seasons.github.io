@@ -3,243 +3,1194 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>随机数生成器</title>
+    <title>齐工微课 - 2026中国国际大学生创新大赛</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
+        
+        :root {
+            --primary: #0d7377;
+            --secondary: #14919b;
+            --accent: #32e0c4;
+            --dark: #1a1a2e;
+            --light: #e8f6f3;
+            --gradient: linear-gradient(135deg, #0d7377 0%, #14919b 50%, #32e0c4 100%);
         }
-
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            overflow-x: hidden;
+            padding-top: 60px; /* 修复：给固定导航留空间 */
+        }
+        
+        /* 导航 */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(232, 246, 243, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 15px 0;
+            box-shadow: 0 2px 20px rgba(13, 115, 119, 0.1);
+        }
+        
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: #555;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+        
+        /* 通用容器 */
         .container {
-            background: rgba(255, 255, 255, 0.95);
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        section {
+            padding: 100px 0;
+        }
+        
+        h2 {
+            font-size: 36px;
+            margin-bottom: 20px;
+            text-align: center;
+            color: var(--dark);
+        }
+        
+        .section-subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 60px;
+            font-size: 18px;
+        }
+        
+        /* Hero 封面 - 修复：减去导航高度 */
+        .hero {
+            min-height: calc(100vh - 60px);
+            background: var(--gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="%23ffffff" fill-opacity="0.1" d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,112C672,96,768,96,864,112C960,128,1056,160,1152,160C1248,160,1344,128,1392,112L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>') no-repeat bottom;
+            background-size: cover;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            padding: 0 20px;
+        }
+        
+        .badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.2);
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 14px;
+            margin-bottom: 20px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .hero h1 {
+            font-size: 56px;
+            margin-bottom: 20px;
+            font-weight: 800;
+            letter-spacing: -1px;
+        }
+        
+        .hero-subtitle {
+            font-size: 24px;
+            margin-bottom: 30px;
+            opacity: 0.95;
+        }
+        
+        .hero-desc {
+            font-size: 18px;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto 40px;
+        }
+        
+        .cta-btn {
+            display: inline-block;
+            background: white;
+            color: var(--primary);
+            padding: 15px 40px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 18px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .cta-btn:hover {
+                  transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        
+        /* 政策背景 */
+        .policy {
+            background: var(--light);
+        }
+        
+        .policy-card {
+            background: white;
             border-radius: 20px;
             padding: 40px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            text-align: center;
-            max-width: 400px;
-            width: 100%;
+            box-shadow: 0 10px 40px rgba(13, 115, 119, 0.08);
+            border-left: 5px solid var(--primary);
         }
-
-        h1 {
-            color: #333;
-            margin-bottom: 10px;
-            font-size: 24px;
+        
+        .policy-quote {
+            font-size: 20px;
+            color: var(--dark);
+            font-style: italic;
+            margin-bottom: 20px;
+            line-height: 1.8;
         }
-
-        .subtitle {
-            color: #666;
-            margin-bottom: 30px;
-            font-size: 14px;
-        }
-
-        .number-display {
-            font-size: 80px;
+        
+        .policy-source {
+            color: var(--secondary);
             font-weight: bold;
-            color: #667eea;
-            margin: 30px 0;
-            min-height: 100px;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .stat-item {
+            text-align: center;
+            padding: 30px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(13, 115, 119, 0.05);
+        }
+        
+        .stat-number {
+            font-size: 48px;
+            font-weight: bold;
+            color: var(--primary);
+            display: block;
+        }
+        
+        .stat-label {
+            color: #666;
+            margin-top: 10px;
+        }
+        
+        /* 痛点 - 修复：全新布局避免重叠 */
+        .pain-points {
+            background: var(--dark);
+            color: white;
+        }
+        
+        .pain-points h2 {
+            color: white;
+        }
+        
+        .triangle-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 60px 0;
+            position: relative;
+            min-height: 500px;
+        }
+        
+        /* 三角形背景 */
+        .triangle-bg {
+            width: 0;
+            height: 0;
+            border-left: 200px solid transparent;
+            border-right: 200px solid transparent;
+            border-bottom: 350px solid rgba(50, 224, 196, 0.1);
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1;
+        }
+        
+        /* 三个圆形角标 - 修复：绝对定位确保不重叠 */
+        .triangle-corners {
+            position: relative;
+            width: 500px;
+            height: 400px;
+            z-index: 2;
+        }
+        
+        .triangle-corner {
+            position: absolute;
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            text-align: center;
+            padding: 25px;
+            background: rgba(13, 115, 119, 0.4);
+            border: 3px solid var(--accent);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(5px);
+        }
+        
+        /* 左上 */
+        .corner-1 { 
+            top: 0;
+            left: 0;
+        }
+        /* 右上 */
+        .corner-2 { 
+            top: 0;
+            right: 0;
+        }
+        /* 底部居中 */
+        .corner-3 { 
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .triangle-corner h4 {
+            color: var(--accent);
+            margin-bottom: 10px;
+            font-size: 16px;
+            font-weight: bold;
+        }
+        
+        .triangle-corner p {
+            font-size: 13px;
+            opacity: 0.9;
+            line-height: 1.5;
+        }
+        
+        .solution-arrow {
+            text-align: center;
+            margin: 40px 0 30px;
+            font-size: 48px;
+            color: var(--accent);
+            animation: bounce 2s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        .solution-box {
+            background: var(--primary);
+            color: white;
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .solution-box h3 {
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+        
+        /* 技术壁垒 */
+        .tech {
+            background: white;
+        }
+        
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .tech-card {
+            background: var(--light);
+            border-radius: 20px;
+            padding: 40px 30px;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 2px solid transparent;
+        }
+        
+        .tech-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(13, 115, 119, 0.1);
+            border-color: var(--secondary);
+        }
+        
+        .tech-icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+        
+        .tech-card h3 {
+            color: var(--dark);
+            margin-bottom: 15px;
+            font-size: 20px;
+        }
+        
+        .tech-card p {
+            color: #666;
+            font-size: 15px;
+            line-height: 1.8;
+        }
+        
+        .tech-badge {
+            display: inline-block;
+            background: var(--gradient);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 15px;
+            font-size: 12px;
+            margin-top: 15px;
+        }
+        
+        /* 架构图 */
+        .architecture {
+            background: var(--light);
+            text-align: center;
+        }
+        
+        .arch-layers {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            max-width: 800px;
+            margin: 40px auto;
+        }
+        
+        .arch-layer {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(13, 115, 119, 0.05);
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            text-align: left;
+        }
+        
+        .arch-layer-number {
+            background: var(--primary);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: all 0.3s ease;
+            font-weight: bold;
+            font-size: 20px;
+            flex-shrink: 0;
         }
-
-        .number-display.rolling {
-            color: #999;
-        }
-
-        .btn {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            padding: 15px 50px;
+        
+        .arch-layer-content h4 {
+            color: var(--dark);
+            margin-bottom: 8px;
             font-size: 18px;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin: 10px;
-            outline: none;
         }
-
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
-        }
-
-        .btn:active {
-            transform: translateY(0);
-        }
-
-        .btn-secondary {
-            background: #f0f0f0;
-            color: #333;
+        
+        .arch-layer-content p {
+            color: #666;
             font-size: 14px;
-            padding: 10px 30px;
         }
-
-        .btn-secondary:hover {
-            background: #e0e0e0;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        
+        /* 商业模式 */
+        .business {
+            background: white;
         }
-
-        .history {
-            margin-top: 30px;
-            text-align: left;
+        
+        .biz-model {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+            margin: 40px 0;
         }
-
-        .history h3 {
-            color: #333;
-            margin-bottom: 10px;
-            font-size: 16px;
+        
+        .biz-flow {
+            background: var(--light);
+            padding: 40px;
+            border-radius: 20px;
         }
-
-        .history-list {
+        
+        .flow-step {
             display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            max-height: 120px;
-            overflow-y: auto;
+            align-items: center;
+            margin-bottom: 20px;
+            padding: 20px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 3px 10px rgba(13, 115, 119, 0.05);
         }
-
-        .history-item {
-            background: #f0f0f0;
-            padding: 5px 12px;
-            border-radius: 15px;
+        
+        .flow-icon {
+            font-size: 32px;
+            margin-right: 20px;
+        }
+        
+        .flow-text h4 {
+            color: var(--dark);
+            margin-bottom: 5px;
+        }
+        
+        .flow-text p {
+            color: #666;
             font-size: 14px;
-            color: #667eea;
+        }
+        
+        .flow-arrow {
+            text-align: center;
+            font-size: 24px;
+            color: var(--secondary);
+            margin: 10px 0;
+        }
+        
+        .biz-features {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .biz-feature {
+            padding: 25px;
+            background: var(--gradient);
+            color: white;
+            border-radius: 15px;
+        }
+        
+        .biz-feature h4 {
+            font-size: 18px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .biz-feature p {
+            opacity: 0.95;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        
+        /* 微专业矩阵 */
+        .matrix {
+            background: var(--light);
+        }
+        
+        .matrix-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .matrix-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(13, 115, 119, 0.08);
+            transition: transform 0.3s;
+        }
+        
+        .matrix-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .matrix-header {
+            background: var(--gradient);
+            color: white;
+            padding: 25px;
+        }
+        
+        .matrix-header h3 {
+            font-size: 20px;
+            margin-bottom: 5px;
+        }
+        
+        .matrix-header span {
+            opacity: 0.9;
+            font-size: 14px;
+        }
+        
+        .matrix-body {
+            padding: 25px;
+        }
+        
+        .matrix-body ul {
+            list-style: none;
+        }
+        
+        .matrix-body li {
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .matrix-body li:last-child {
+            border-bottom: none;
+        }
+        
+        .partner-tag {
+            display: inline-block;
+            background: #e8f6f3;
+            color: var(--primary);
+            padding: 3px 10px;
+            border-radius: 10px;
+            font-size: 12px;
+            margin-left: auto;
+        }
+        
+        /* 运营创新 */
+        .operation {
+            background: white;
+        }
+        
+        .coop-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .coop-card {
+            text-align: center;
+            padding: 40px 30px;
+            background: var(--light);
+            border-radius: 20px;
+            transition: all 0.3s;
+        }
+        
+        .coop-card:hover {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .coop-card:hover h3,
+        .coop-card:hover p {
+            color: white;
+        }
+        
+        .coop-icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+        
+        .coop-card h3 {
+            color: var(--dark);
+            margin-bottom: 15px;
+            font-size: 20px;
+        }
+        
+        .coop-card p {
+            color: #666;
+            font-size: 15px;
+            line-height: 1.8;
+        }
+        
+        /* 对比优势 */
+        .comparison {
+            background: var(--dark);
+            color: white;
+        }
+        
+        .comparison h2 {
+            color: white;
+        }
+        
+        .compare-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 40px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 15px;
+            overflow: hidden;
+        }
+        
+        .compare-table th,
+        .compare-table td {
+            padding: 20px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .compare-table th {
+            background: var(--primary);
+            font-weight: 600;
+        }
+        
+        .compare-table tr:hover {
+            background: rgba(255,255,255,0.05);
+        }
+        
+        .check {
+            color: #32e0c4;
             font-weight: bold;
         }
-
-        .range-info {
-            color: #999;
-            font-size: 12px;
-            margin-top: 20px;
+        
+        .cross {
+            color: #f87171;
         }
-
-        @media (max-width: 480px) {
-            .container {
-                padding: 30px 20px;
+        
+        /* 结尾页 */
+        .ending {
+            background: var(--gradient);
+            color: white;
+            text-align: center;
+            min-height: 60vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .ending-content h2 {
+            color: white;
+            font-size: 42px;
+            margin-bottom: 60px;
+        }
+        
+        .ending-info {
+            font-size: 20px;
+            line-height: 2.2;
+            opacity: 0.95;
+        }
+        
+        .ending-info p {
+            margin: 15px 0;
+        }
+        
+        .ending-info .label {
+            opacity: 0.8;
+            font-size: 16px;
+        }
+        
+        /* 页脚 */
+        footer {
+            background: var(--dark);
+            color: white;
+            text-align: center;
+            padding: 30px;
+            font-size: 14px;
+            opacity: 0.8;
+        }
+        
+        /* 响应式 */
+        @media (max-width: 768px) {
+            body { padding-top: 60px; }
+            .hero { min-height: calc(100vh - 60px); }
+            .hero h1 { font-size: 36px; }
+            .nav-links { display: none; }
+            .tech-grid,
+            .matrix-grid,
+            .coop-grid { grid-template-columns: 1fr; }
+            .biz-model { grid-template-columns: 1fr; }
+            .stats-grid { grid-template-columns: 1fr; }
+            
+            /* 修复移动端三角形布局 */
+            .triangle-corners {
+                width: 100%;
+                height: auto;
+                display: flex;
+                flex-direction: column;
+                gap: 30px;
+                align-items: center;
             }
-
-            .number-display {
-                font-size: 60px;
+            .triangle-corner {
+                position: relative;
+                top: auto !important;
+                left: auto !important;
+                right: auto !important;
+                bottom: auto !important;
+                transform: none !important;
             }
-
-            .btn {
-                padding: 12px 40px;
-                font-size: 16px;
-            }
+            .triangle-bg { display: none; }
+            .triangle-container { min-height: auto; }
+            
+            .ending-content h2 { font-size: 28px; }
+            .ending-info { font-size: 16px; }
+        }
+        
+        /* 动画 */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+        
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>🎲 鱼呓大抽奖！</h1>
-        <p class="subtitle">范围：0 - 150</p>
-
-        <div class="number-display" id="numberDisplay">?</div>
-
-        <button class="btn" id="generateBtn" onclick="generateNumber()">生成随机数</button>
-        <button class="btn btn-secondary" id="copyBtn" onclick="copyNumber()">复制结果</button>
-
-        <div class="history">
-            <h3>📋 历史记录</h3>
-            <div class="history-list" id="historyList"></div>
+    <!-- 导航 - 修复：删除团队链接 -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo">🟢 齐工微课</div>
+            <ul class="nav-links">
+                <li><a href="#policy">时代机遇</a></li>
+                <li><a href="#pain">痛点破解</a></li>
+                <li><a href="#tech">技术壁垒</a></li>
+                <li><a href="#business">商业模式</a></li>
+                <li><a href="#matrix">微专业</a></li>
+            </ul>
         </div>
+    </nav>
 
-        <p class="range-info">点击"生成随机数"按钮或按空格键</p>
-    </div>
+    <!-- 封面 -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="badge">🏆 2026中国国际大学生创新大赛 · 新文科赛道</div>
+            <h1>齐工微课</h1>
+            <p class="hero-subtitle">AI孪生实训驱动的县域职业技能微学习中心</p>
+            <p class="hero-desc">响应教育部"双千计划"，以微证书连接教育供给与产业需求，构建"能力本位"的县域人才培养新基建</p>
+            <a href="#policy" class="cta-btn">了解项目详情</a>
+        </div>
+    </section>
 
+    <!-- 政策背景 -->
+    <section id="policy" class="policy">
+        <div class="container">
+            <h2>时代机遇</h2>
+            <p class="section-subtitle">教育部2025年"双千计划"为项目提供制度合法性</p>
+            
+            <div class="policy-card fade-in">
+                <p class="policy-quote">
+                    "设立1000个微专业与1000门职业能力培训课程，将微证书纳入高等教育与职业教育协同发展的制度安排，推动中国职业教育从'学历本位'向'能力本位'转型。"
+                </p>
+                <p class="policy-source">— 教育部2025年"双千计划"</p>
+            </div>
+            
+            <div class="stats-grid fade-in">
+                <div class="stat-item">
+                    <span class="stat-number">1000+</span>
+                    <p class="stat-label">微专业建设目标</p>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">5亿</span>
+                    <p class="stat-label">县域劳动力市场</p>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">∞</span>
+                    <p class="stat-label">乡村振兴人才缺口</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 痛点破解 - 修复：全新三角形布局 -->
+    <section id="pain" class="pain-points">
+        <div class="container">
+            <h2>破解"不可能三角"</h2>
+            <p class="section-subtitle">县域职业培训的三大痛点，我们用微学习中心一举破解</p>
+            
+            <div class="triangle-container fade-in">
+                <!-- 三角形背景 -->
+                <div class="triangle-bg"></div>
+                
+                <!-- 三个圆形角标 - 修复：使用独立容器避免重叠 -->
+                <div class="triangle-corners">
+                    <div class="triangle-corner corner-1">
+                        <h4>❌ 政府项目</h4>
+                        <p>效果难衡量<br>流于形式</p>
+                    </div>
+                    <div class="triangle-corner corner-2">
+                        <h4>❌ 在线平台</h4>
+                        <p>缺乏实操场景<br>完课率低</p>
+                    </div>
+                    <div class="triangle-corner corner-3">
+                        <h4>❌ 企业培训</h4>
+                        <p>门槛高成本高<br>覆盖有限</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="solution-arrow fade-in">⬇</div>
+            
+            <div class="solution-box fade-in">
+                <h3>✅ 微学习中心"教育–实践–就业"闭环</h3>
+                <p>本地化线上微课 + AI赋能 + 线下师资指导实践 + 企业合作</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 技术壁垒 -->
+    <section id="tech" class="tech">
+        <div class="container">
+            <h2>优势：线上线下平台多层技术壁垒</h2>
+            <p class="section-subtitle">技术深度融合改变县域职业培训生态</p>
+            
+            <div class="tech-grid fade-in">
+                <div class="tech-card">
+                    <div class="tech-icon">🎥</div>
+                    <h3>AI虚拟直播间</h3>
+                    <p>短视频制作课程升级为虚拟直播实训，学员与AI观众实时互动，AI实时反馈话术、表情、节奏，降低试错成本</p>
+                    <span class="tech-badge">DeepSeek大模型驱动</span>
+                </div>
+                <div class="tech-card">
+                    <div class="tech-icon">📦</div>
+                    <h3>数字孪生供应链</h3>
+                    <p>直播电商培训接入京东/拼多多真实数据，模拟农产品上行全流程，从选品、定价到物流，全流程仿真</p>
+                    <span class="tech-badge">真实电商数据接入</span>
+                </div>
+                <div class="tech-card">
+                    <div class="tech-icon">🌾</div>
+                    <h3>AR田间实训</h3>
+                    <p>智慧农业课程用手机扫描作物，AI识别病虫害并指导操作，计算机视觉+农业知识图谱形成数据壁垒</p>
+                    <span class="tech-badge">CV+知识图谱</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 技术架构 -->
+    <section class="architecture">
+        <div class="container">
+            <h2>技术架构</h2>
+            <p class="section-subtitle">三层壁垒构建护城河</p>
+            
+            <div class="arch-layers fade-in">
+                <div class="arch-layer">
+                    <div class="arch-layer-number">3</div>
+                    <div class="arch-layer-content">
+                        <h4>应用层：轻量化交付</h4>
+                        <p>3-5分钟微课、AI陪练、游戏化学习、社区化学习小组</p>
+                    </div>
+                </div>
+                <div class="arch-layer">
+                    <div class="arch-layer-number">2</div>
+                    <div class="arch-layer-content">
+                        <h4>平台层：信任与流通</h4>
+                        <p>区块链技能存证 + 技能积分银行（Token通证化，跨县域流通）</p>
+                    </div>
+                </div>
+                <div class="arch-layer">
+                    <div class="arch-layer-number">1</div>
+                    <div class="arch-layer-content">
+                        <h4>资源层：数字孪生实训</h4>
+                        <p>AI虚拟直播间、数字孪生供应链、AR田间实训场景</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 商业模式 -->
+    <section id="business" class="business">
+        <div class="container">
+            <h2>商业模式创新</h2>
+            <p class="section-subtitle">技能银行 + 人才期货，构建闭环生态</p>
+            
+            <div class="biz-model fade-in">
+                <div class="biz-flow">
+                    <div class="flow-step">
+                        <div class="flow-icon">👨‍🎓</div>
+                        <div class="flow-text">
+                            <h4>学员入学</h4>
+                            <p>缴纳会费或技能积分抵押</p>
+                        </div>
+                    </div>
+                    <div class="flow-arrow">⬇</div>
+                    <div class="flow-step">
+                        <div class="flow-icon">📜</div>
+                        <div class="flow-text">
+                            <h4>获得微证书</h4>
+                            <p>技能积分上链存证</p>
+                        </div>
+                    </div>
+                    <div class="flow-arrow">⬇</div>
+                    <div class="flow-step">
+                        <div class="flow-icon">🏢</div>
+                        <div class="flow-text">
+                            <h4>企业预付"人才期货"</h4>
+                            <p>锁定就业，定制课程</p>
+                        </div>
+                    </div>
+                    <div class="flow-arrow">⬇</div>
+                    <div class="flow-step">
+                        <div class="flow-icon">💼</div>
+                        <div class="flow-text">
+                            <h4>实训完成入职</h4>
+                            <p>毕业即就业，技能积分可交易</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="biz-features">
+                    <div class="biz-feature">
+                        <h4>💰 低获客成本</h4>
+                        <p>政府合作项目导流 + 学习合作社老带新裂变，获客成本仅为传统培训机构1/5</p>
+                    </div>
+                    <div class="biz-feature">
+                        <h4>⚡ 低交付成本</h4>
+                        <p>AI孪生实训替代真实场地设备，本地"学习经纪人"替代外派员工，人效提升3倍</p>
+                    </div>
+                    <div class="biz-feature">
+                        <h4>📈 多元收入</h4>
+                        <p>企业定制培训费 + 技能积分交易手续费 + 政府购买服务补贴</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 微专业矩阵 -->
+    <section id="matrix" class="matrix">
+        <div class="container">
+            <h2>县域产业微专业矩阵</h2>
+            <p class="section-subtitle">避开抖音/B站通用课程，聚焦本地特色产业</p>
+            
+            <div class="matrix-grid fade-in">
+                <div class="matrix-card">
+                    <div class="matrix-header">
+                        <h3>🌾 农产品电商</h3>
+                        <span>对接乡村振兴战略</span>
+                    </div>
+                    <div class="matrix-body">
+                        <ul>
+                            <li>"一村一品"品牌运营 <span class="partner-tag">农业合作社</span></li>
+                            <li>冷链物流管理 <span class="partner-tag">京东农场</span></li>
+                            <li>农产品直播话术 <span class="partner-tag">拼多多</span></li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="matrix-card">
+                    <div class="matrix-header">
+                        <h3>🏡 乡村旅游</h3>
+                        <span>文旅融合新路径</span>
+                    </div>
+                    <div class="matrix-body">
+                        <ul>
+                            <li>民宿数字化运营 <span class="partner-tag">民宿协会</span></li>
+                            <li>非遗手作体验设计 <span class="partner-tag">文旅局</span></li>
+                            <li>乡村研学课程开发 <span class="partner-tag">教育局</span></li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="matrix-card">
+                    <div class="matrix-header">
+                        <h3>🚜 智慧农业</h3>
+                        <span>数字农业新基建</span>
+                    </div>
+                    <div class="matrix-body">
+                        <ul>
+                            <li>无人机植保操作 <span class="partner-tag">农机企业</span></li>
+                            <li>智能大棚管理 <span class="partner-tag">农业局</span></li>
+                            <li>农业数据分析 <span class="partner-tag">科技公司</span></li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="matrix-card">
+                    <div class="matrix-header">
+                        <h3>🏭 县域制造</h3>
+                        <span>产业升级人才支撑</span>
+                    </div>
+                    <div class="matrix-body">
+                        <ul>
+                            <li>智能设备基础维护 <span class="partner-tag">工业园区</span></li>
+                            <li>质量管理与检测 <span class="partner-tag">制造企业</span></li>
+                            <li>安全生产规范 <span class="partner-tag">安监部门</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 运营创新 -->
+    <section class="operation">
+        <div class="container">
+            <h2>学习合作社：社群即服务</h2>
+            <p class="section-subtitle">替代传统培训机构"重销售轻服务"模式</p>
+            
+            <div class="coop-grid fade-in">
+                <div class="coop-card">
+                    <div class="coop-icon">🤝</div>
+                    <h3>学员即社员</h3>
+                    <p>缴纳会费或技能积分抵押，享终身学习权益，构建强关系社群，降低流失率</p>
+                </div>
+                <div class="coop-card">
+                    <div class="coop-icon">🌟</div>
+                    <h3>老带新机制</h3>
+                    <p>优秀学员成为"技能带头人"，获得培训收益分成，实现自组织增长</p>
+                </div>
+                <div class="coop-card">
+                    <div class="coop-icon">🎯</div>
+                    <h3>在地化运营</h3>
+                    <p>本地返乡青年担任"学习经纪人"，非外派员工，降低运营成本，增强信任感</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 对比优势 -->
+    <section class="comparison">
+        <div class="container">
+            <h2>差异化优势对比</h2>
+            <p class="section-subtitle">与纯线上平台、纯政府项目、纯高校帮扶形成明显区隔</p>
+            
+            <table class="compare-table fade-in">
+                <thead>
+                    <tr>
+                        <th>维度</th>
+                        <th>纯线上平台</th>
+                        <th>纯政府项目</th>
+                        <th>纯高校帮扶</th>
+                        <th style="color: #32e0c4;">齐工微课</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>实训场景</td>
+                        <td class="cross">❌ 缺乏实操</td>
+                        <td class="cross">❌ 设备陈旧</td>
+                        <td class="cross">❌ 周期太短</td>
+                        <td class="check">✅ AI孪生+本地场景</td>
+                    </tr>
+                    <tr>
+                        <td>证书含金量</td>
+                        <td class="cross">❌ 企业不认可</td>
+                        <td class="cross">❌ 形式主义</td>
+                        <td class="cross">❌ 脱离市场需求</td>
+                        <td class="check">✅ 企业认证+微证书双证</td>
+                    </tr>
+                    <tr>
+                        <td>运营可持续性</td>
+                        <td class="cross">❌ 获客成本高</td>
+                        <td class="cross">❌ 依赖财政</td>
+                        <td class="cross">❌ 不可持续</td>
+                        <td class="check">✅ 合作社自运营+企业付费</td>
+                    </tr>
+                    <tr>
+                        <td>就业闭环</td>
+                        <td class="cross">❌ 无对接</td>
+                        <td class="cross">❌ 无跟踪</td>
+                        <td class="cross">❌ 无保障</td>
+                        <td class="check">✅ 人才期货+入职保障</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- 结尾页 - 修复：直接接在对比优势后面 -->
+    <section class="ending">
+        <div class="container">
+            <div class="ending-content">
+                <h2>齐工微课 · 期待与你共同前行</h2>
+                <div class="ending-info">
+                    <p><span class="label">项目负责人</span></p>
+                    <p>安阳工学院 · 知识产权 · 王德宁</p>
+                    <p style="margin-top: 30px;"><span class="label">联系方式</span></p>
+                    <p>18937390793</p>
+                    <p style="margin-top: 40px; font-size: 16px; opacity: 0.8;">中国国际大学生创新大赛参赛作品</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer>
+        <p>© 2026 齐工微课团队 · 让技能学习触手可及 · 助力乡村振兴</p>
+    </footer>
+
+    <!-- 滚动动画脚本 -->
     <script>
-        let history = [];
-        let isRolling = false;
+        // 滚动显示动画
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: "0px 0px -50px 0px"
+        };
 
-        function generateNumber() {
-            if (isRolling) return;
-
-            isRolling = true;
-            const display = document.getElementById('numberDisplay');
-            const btn = document.getElementById('generateBtn');
-
-            display.classList.add('rolling');
-            btn.disabled = true;
-
-            let rollCount = 0;
-            const maxRolls = 20;
-            const interval = setInterval(() => {
-                display.textContent = Math.floor(Math.random() * 141);
-                rollCount++;
-
-                if (rollCount >= maxRolls) {
-                    clearInterval(interval);
-                    const finalNumber = Math.floor(Math.random() * 141);
-                    display.textContent = finalNumber;
-                    display.classList.remove('rolling');
-                    btn.disabled = false;
-                    isRolling = false;
-
-                    // 添加到历史记录
-                    history.unshift(finalNumber);
-                    if (history.length > 20) history.pop();
-                    updateHistory();
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
                 }
-            }, 50);
-        }
-
-        function copyNumber() {
-            const number = document.getElementById('numberDisplay').textContent;
-            if (number === '?') {
-                alert('请先生成一个随机数！');
-                return;
-            }
-
-            navigator.clipboard.writeText(number).then(() => {
-                const btn = document.getElementById('copyBtn');
-                const originalText = btn.textContent;
-                btn.textContent = '已复制！';
-                setTimeout(() => {
-                    btn.textContent = originalText;
-                }, 1500);
-            }).catch(() => {
-                // 降级方案
-                const textarea = document.createElement('textarea');
-                textarea.value = number;
-                document.body.appendChild(textarea);
-                textarea.select();
-                document.execCommand('copy');
-                document.body.removeChild(textarea);
-
-                const btn = document.getElementById('copyBtn');
-                btn.textContent = '已复制！';
-                setTimeout(() => {
-                    btn.textContent = '复制结果';
-                }, 1500);
             });
-        }
+        }, observerOptions);
 
-        function updateHistory() {
-            const list = document.getElementById('historyList');
-            list.innerHTML = history.map(num => `<span class="history-item">${num}</span>`).join('');
-        }
+        document.querySelectorAll('.fade-in').forEach((el) => observer.observe(el));
 
-        // 空格键快捷生成
-        document.addEventListener('keydown', (e) => {
-            if (e.code === 'Space' && !isRolling) {
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
                 e.preventDefault();
-                generateNumber();
-            }
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
         });
     </script>
 </body>
 </html>
+
